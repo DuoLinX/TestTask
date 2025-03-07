@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TestTask.View.MainPage"
+             xmlns:viewModel="clr-namespace:TestTask.ViewModel"
+             xmlns:behavior="clr-namespace:TestTask.Behavior">
+    <ContentPage.BindingContext>
+        <viewModel:MainPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <StackLayout Padding="20" VerticalOptions="Center">
+            <Label Text="{Binding Status}" TextColor="Navy" FontSize="Large" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding ValidationMessage}" TextColor="Red" />
+            <Label Text="Введите название (не менее 5 символов):" />
+            <Entry Text="{Binding ProductName}" Placeholder="Название" IsEnabled="{Binding IsNotBusy}">
+                <Entry.Behaviors>
+                    <behavior:ProductNameValidation />
+                </Entry.Behaviors>
+            </Entry>
+
+            <Label Text="Введите количество (до 3 знаков после запятой):" />
+            <Entry Text="{Binding Quantity, StringFormat='{0:F3}'}" 
+                   Placeholder="Пример: 123,456" 
+                   Keyboard="Numeric" 
+                   IsEnabled="{Binding IsNotBusy}">
+                <Entry.Behaviors>
+                    <behavior:QuantityValidation />
+                </Entry.Behaviors>
+            </Entry>
+
+            <Label Text="Введите дату (ДД.ММ.ГГГГ):" />
+            <Entry Text="{Binding DateText, StringFormat='{0:dd.MM.yyyy}'}" Placeholder="дд.ММ.гггг" IsEnabled="{Binding IsNotBusy}">
+                <Entry.Behaviors>
+                    <behavior:DateValidation />
+                </Entry.Behaviors>
+            </Entry>
+            <Button Text="Добавить/Изменить" Command="{Binding AddProductCommand}" />
+            <Button Text="Посмотреть сохраненные" Command="{Binding ViewContentCommand}"/>
+            <Button Text="Очистить форму" Command="{Binding ClearCommand}"/>
+        </StackLayout>
+        <BoxView BackgroundColor="Black" Opacity="0.5" IsVisible="{Binding IsBusy}" />
+        <Frame IsVisible="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center"
+               BackgroundColor="White" Padding="20" CornerRadius="10" HasShadow="True">
+            <StackLayout IsVisible="{Binding IsBusy}" 
+                         VerticalOptions="Center" 
+                         HorizontalOptions="Center"
+                         BackgroundColor="White" Padding="20">
+                <ProgressBar Progress="{Binding Progress}" WidthRequest="200" HeightRequest="10" />
+                <Label Text="{Binding Status}" FontSize="Medium" HorizontalOptions="Center" />
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>
