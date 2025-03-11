@@ -7,20 +7,23 @@
     <ContentPage.BindingContext>
         <viewModel:MainPageViewModel />
     </ContentPage.BindingContext>
+    <ScrollView>
     <Grid>
         <StackLayout Padding="20" VerticalOptions="Center">
             <Label Text="{Binding Status}" TextColor="Navy" FontSize="Large" HorizontalTextAlignment="Center" />
             <Label Text="{Binding ValidationMessage}" TextColor="Red" />
             <Label Text="Введите название (не менее 5 символов):" />
-            <Entry Text="{Binding ProductName}" Placeholder="Название" IsEnabled="{Binding IsNotBusy}">
+            <Entry x:Name="nameEntry" Text="{Binding ProductName}" Placeholder="Название" Completed="ProductNameEntryCompleted"
+                   IsEnabled="{Binding IsNotBusy}">
                 <Entry.Behaviors>
                     <behavior:ProductNameValidation />
                 </Entry.Behaviors>
             </Entry>
 
             <Label Text="Введите количество (до 3 знаков после запятой):" />
-            <Entry Text="{Binding Quantity, StringFormat='{0:F3}'}" 
-                   Placeholder="Пример: 123,456" 
+            <Entry x:Name="quantityEntry" Text="{Binding Quantity, StringFormat='{0:F3}'}" 
+                   Placeholder="Пример: 123,456"
+                   Completed="QuantityEntryCompleted"
                    Keyboard="Numeric" 
                    IsEnabled="{Binding IsNotBusy}">
                 <Entry.Behaviors>
@@ -29,12 +32,10 @@
             </Entry>
 
             <Label Text="Введите дату (ДД.ММ.ГГГГ):" />
-            <Entry Text="{Binding DateText, StringFormat='{0:dd.MM.yyyy}'}" Placeholder="дд.ММ.гггг" IsEnabled="{Binding IsNotBusy}">
-                <Entry.Behaviors>
-                    <behavior:DateValidation />
-                </Entry.Behaviors>
+                <Entry x:Name="dateEntry" Text="{Binding DateText, Mode=TwoWay}" Placeholder="дд.ММ.гггг" Completed="DateEntryComleted" IsEnabled="{Binding IsNotBusy}">
+                
             </Entry>
-            <Button Text="Добавить/Изменить" Command="{Binding AddProductCommand}" />
+            <Button Text="Добавить/Изменить" Command="{Binding AddProductCommand}" IsEnabled="{Binding ValidDataComplete}" />
             <Button Text="Посмотреть сохраненные" Command="{Binding ViewContentCommand}"/>
             <Button Text="Очистить форму" Command="{Binding ClearCommand}"/>
         </StackLayout>
@@ -50,4 +51,5 @@
             </StackLayout>
         </Frame>
     </Grid>
+    </ScrollView>
 </ContentPage>

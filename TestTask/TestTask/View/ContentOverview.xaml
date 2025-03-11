@@ -8,17 +8,18 @@
         <viewModel:MainPageViewModel />
     </ContentPage.BindingContext>
 
+    <ScrollView>
     <StackLayout Padding="10">
         <Label Text="Список товаров" FontSize="Large" HorizontalOptions="Center" />
         <ScrollView Orientation="Both">
-            <ListView RowHeight="60" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}">
+            <ListView RowHeight="80" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="10">
-                                <Label Text="{Binding ProductName}" WidthRequest="100" />
-                                <Label Text="{Binding QuantityOfGoods, StringFormat='{0:F3}'}" WidthRequest="50"/>
-                                <Label Text="{Binding ProductionDate, StringFormat='{0:dd.MM.yyyy}'}" WidthRequest="80"/>
+                                <Label Text="{Binding ProductName}" WidthRequest="130" />
+                                <Label Text="{Binding QuantityOfGoods, StringFormat='{0:F3}'}" WidthRequest="70"/>
+                                <Label Text="{Binding ProductionDate, StringFormat='{0:dd.MM.yy}'}" WidthRequest="90"/>
                                 <Button Text="✏️" Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference ButtonCommamds}}" CommandParameter="{Binding}" />
                                 <Button Text="🗑️" Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference ButtonCommamds}}" CommandParameter="{Binding}" />
                             </StackLayout>
@@ -29,4 +30,5 @@
         </ScrollView>
         <Button Text="Добавить" Command="{Binding GoToMainPageCommand}"/>
     </StackLayout>
+    </ScrollView>
 </ContentPage>
