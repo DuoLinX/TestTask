@@ -281,11 +281,12 @@ namespace TestTask.ViewModel
             ValidDataComplete = false;
             if (string.IsNullOrWhiteSpace(ProductName))
             {
+                ValidationMessage = "Наименование не может быть пустым";
                 return;
             }
             if (ProductName.Length < 5)
             {
-                ValidationMessage = "Название должно содержать минимум 5 символов";
+                ValidationMessage = "Наименование должно содержать минимум 5 символов";
                 return;
             }
             if (string.IsNullOrWhiteSpace(Quantity)) 

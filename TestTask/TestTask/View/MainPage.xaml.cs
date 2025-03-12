@@ -44,7 +44,13 @@ namespace TestTask.View
 
         private void ProductNameEntryCompleted(object sender, EventArgs e)
         {
-            if(nameEntry.Text.Length < 5)
+            if (string.IsNullOrWhiteSpace(dateEntry.Text)) 
+            {
+                DependencyService.Get<IAudioService>().PlayAlertSound();
+                dateEntry.Text = string.Empty;
+                return;
+            }
+            if (nameEntry.Text.Length < 5)
             {
                 DependencyService.Get<IAudioService>().PlayAlertSound();
             }
